@@ -1,0 +1,386 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GovSentinel | AI DAO Governance Gatekeeper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/main.css?v=6">
+<style>
+/* Guaranteed inline styles for compact 2-row How It Works layout */
+.how-strip {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+.how-strip-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+.how-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  background: #eef2ff;
+  color: #4f46e5;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.how-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+  margin: 0;
+}
+.how-grid-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.how-col {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #f8fafc;
+  border: 1px solid #edf2f7;
+  border-radius: 10px;
+  padding: 10px 12px;
+  transition: all .2s ease;
+}
+.how-col:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
+}
+.how-step-bubble {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #4f46e5;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.how-step-bubble.bubble-purple { background: #7c3aed; }
+.how-step-bubble.bubble-green { background: #059669; }
+.how-col-text strong {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 2px;
+}
+.how-col-text p {
+  margin: 0;
+  font-size: 11.5px;
+  color: #64748b;
+  line-height: 1.4;
+}
+@media (max-width: 900px) {
+  .how-grid-row { grid-template-columns: 1fr; }
+  .how-strip-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.5 4.5 5.6v5.5c0 4.6 3.2 8.9 7.5 10.4 4.3-1.5 7.5-5.8 7.5-10.4V5.6z"/>
+        <path d="m9 12 2.2 2.2L15.4 10"/>
+      </svg>
+    </span>
+    <span class="brand-text">
+      <strong>GovSentinel</strong>
+      <small>AI Governance & Calldata Security Gatekeeper</small>
+    </span>
+  </div>
+  <div class="navbar-right">
+    <a class="nav-link" href="https://docs.genlayer.com" target="_blank" rel="noopener">Docs</a>
+    <span class="chain-badge"><span class="pulse" aria-hidden="true"></span>Bradbury Testnet</span>
+  </div>
+</header>
+
+<main class="shell">
+
+  <!-- Compact 2-Row How It Works Strip -->
+  <section class="how-strip" aria-label="How GovSentinel works">
+    <!-- Row 1: Header and Summary -->
+    <div class="how-strip-head">
+      <span class="how-badge">
+        <span class="material-symbols-rounded" style="font-size: 14px;">verified</span>
+        HOW GOVSENTINEL WORKS
+      </span>
+      <p class="how-title">Zero-Trust DAO Security: Cross-examining human proposal prose against raw execution calldata.</p>
+    </div>
+
+    <!-- Row 2: 3 Compact Columns -->
+    <div class="how-grid-row">
+      <div class="how-col">
+        <div class="how-step-bubble">1</div>
+        <div class="how-col-text">
+          <strong>EVM Calldata Decoding</strong>
+          <p>Decodes raw 4-byte selectors, recipient addresses, and amounts directly from on-chain calldata.</p>
+        </div>
+      </div>
+
+      <div class="how-col">
+        <div class="how-step-bubble bubble-purple">2</div>
+        <div class="how-col-text">
+          <strong>AI Cross-Examination</strong>
+          <p>Validators compare proposal intent text against decoded bytes under strict consensus.</p>
+        </div>
+      </div>
+
+      <div class="how-col">
+        <div class="how-step-bubble bubble-green">3</div>
+        <div class="how-col-text">
+          <strong>Deterministic Veto Guard</strong>
+          <p>Enforces DAO spend limits & whitelists, blocking Trojan drains before execution.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Metrics Strip -->
+  <section class="metrics" aria-label="Session metrics">
+    <article class="metric">
+      <span class="metric-icon material-symbols-rounded" aria-hidden="true">fact_check</span>
+      <div>
+        <p class="metric-value" id="metric-audited">0</p>
+        <p class="metric-label">Proposals audited</p>
+      </div>
+    </article>
+    <article class="metric">
+      <span class="metric-icon is-veto material-symbols-rounded" aria-hidden="true">gavel</span>
+      <div>
+        <p class="metric-value" id="metric-blocked">0</p>
+        <p class="metric-label">Blocked or flagged</p>
+      </div>
+    </article>
+    <article class="metric">
+      <span class="metric-icon is-risk material-symbols-rounded" aria-hidden="true">speed</span>
+      <div>
+        <p class="metric-value" id="metric-risk">n/a</p>
+        <p class="metric-label">Mean risk score</p>
+      </div>
+    </article>
+    <article class="metric">
+      <span class="metric-icon is-ok material-symbols-rounded" aria-hidden="true">verified_user</span>
+      <div>
+        <p class="metric-value" id="metric-whitelist">0</p>
+        <p class="metric-label">Whitelisted targets</p>
+      </div>
+    </article>
+  </section>
+
+  <div class="workspace">
+
+    <section class="panel" aria-labelledby="compose-heading">
+      <header class="panel-head">
+        <h2 id="compose-heading">Proposal under review</h2>
+        <p class="panel-sub" id="dao-line">Loading DAO configuration...</p>
+      </header>
+
+      <div class="panel-body">
+        <div class="field">
+          <span class="field-label">Benchmark Attack & Benign Presets (Click to load)</span>
+          <div class="presets" id="presets"></div>
+        </div>
+
+        <form id="audit-form" novalidate>
+          <div class="field">
+            <label class="field-label" for="proposal-title">Proposal title</label>
+            <input id="proposal-title" name="title" type="text" autocomplete="off"
+                   placeholder="e.g. Core Contributor Grant Q3">
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="proposal-description">Intent description</label>
+            <textarea id="proposal-description" name="description" rows="3"
+                      placeholder="Describe what the proposal is intended to execute..."></textarea>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="target-contract">Target contract address</label>
+            <input id="target-contract" name="target" type="text" class="mono" spellcheck="false" autocomplete="off" placeholder="0x...">
+            <p class="field-note" id="target-note" hidden></p>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label class="field-label" for="claimed-recipient">Claimed recipient</label>
+              <input id="claimed-recipient" name="recipient" type="text" class="mono" spellcheck="false" autocomplete="off" placeholder="0x...">
+            </div>
+            <div class="field">
+              <label class="field-label" for="claimed-amount">Claimed amount (tokens)</label>
+              <input id="claimed-amount" name="amount" type="text" class="mono" inputmode="numeric"
+                     autocomplete="off" placeholder="0">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="max-spend">DAO max spend limit</label>
+            <input id="max-spend" type="text" class="mono" value="10,000 USDC" disabled>
+            <p class="field-note">Configured at deployment. Enforced automatically by GenVM consensus.</p>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="calldata-hex">Raw execution calldata (Hex)</label>
+            <textarea id="calldata-hex" name="calldata" rows="4" class="mono" spellcheck="false" placeholder="0x..."></textarea>
+            <p class="field-note" id="calldata-note" hidden></p>
+          </div>
+
+          <button class="run-button" id="run-audit" type="submit">
+            <span class="material-symbols-rounded" aria-hidden="true">policy</span>
+            <span class="run-label">Run Multi-Validator Consensus Audit</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section class="panel panel-result" aria-labelledby="result-heading">
+      <header class="panel-head">
+        <h2 id="result-heading">Intelligent contract verdict</h2>
+        <p class="panel-sub" id="result-sub">Awaiting proposal audit</p>
+      </header>
+
+      <div class="panel-body">
+
+        <div class="empty-state" id="result-empty">
+          <span class="empty-icon material-symbols-rounded" aria-hidden="true">shield_question</span>
+          <p class="empty-title">No audit performed yet</p>
+          <p class="empty-copy">
+            Select a preset attack vector above or enter proposal calldata, then click Run Multi-Validator Consensus Audit to verify.
+          </p>
+        </div>
+
+        <div class="result" id="result-body" hidden aria-live="polite">
+
+          <div class="verdict" id="verdict-banner">
+            <span class="verdict-icon material-symbols-rounded" id="verdict-icon" aria-hidden="true">shield</span>
+            <div class="verdict-text">
+              <p class="verdict-status" id="verdict-status">PASSED</p>
+              <p class="verdict-summary" id="verdict-summary"></p>
+            </div>
+          </div>
+
+          <div class="gauge-row">
+            <div class="gauge-wrap">
+              <svg class="gauge" viewBox="0 0 140 140" role="img" aria-labelledby="gauge-title">
+                <title id="gauge-title">Risk score</title>
+                <circle class="gauge-track" cx="70" cy="70" r="60"></circle>
+                <circle class="gauge-arc" id="gauge-arc" cx="70" cy="70" r="60"></circle>
+              </svg>
+              <div class="gauge-center">
+                <span class="gauge-value" id="risk-value">0</span>
+                <span class="gauge-max">/ 100</span>
+              </div>
+            </div>
+            <dl class="gauge-facts">
+              <div><dt>Risk band</dt><dd id="fact-band">n/a</dd></div>
+              <div><dt>Intent match</dt><dd id="fact-intent">n/a</dd></div>
+              <div><dt>Auditor</dt><dd id="fact-source">n/a</dd></div>
+              <div><dt>Proposal ID</dt><dd id="fact-id" class="mono">n/a</dd></div>
+            </dl>
+          </div>
+
+          <section class="block">
+            <h3 class="block-title">
+              <span class="material-symbols-rounded" aria-hidden="true">data_object</span>
+              Decoded execution payload
+            </h3>
+            <table class="decoded">
+              <tbody>
+                <tr><th scope="row">Method</th><td id="decoded-method" class="mono">n/a</td></tr>
+                <tr><th scope="row">Recipient</th><td id="decoded-recipient" class="mono">n/a</td></tr>
+                <tr><th scope="row">Amount</th><td id="decoded-amount" class="mono">n/a</td></tr>
+                <tr><th scope="row">Whitelist status</th><td id="decoded-whitelist">n/a</td></tr>
+              </tbody>
+            </table>
+            <p class="decoded-extra" id="decoded-extra" hidden></p>
+          </section>
+
+          <section class="block">
+            <h3 class="block-title">
+              <span class="material-symbols-rounded" aria-hidden="true">warning</span>
+              Identified discrepancies & violations
+              <span class="count-pill" id="discrepancy-count">0</span>
+            </h3>
+            <div class="alert-box" id="discrepancies"></div>
+          </section>
+
+          <section class="block">
+            <h3 class="block-title">
+              <span class="material-symbols-rounded" aria-hidden="true">account_tree</span>
+              Multi-validator consensus pipeline
+            </h3>
+            <ol class="pipeline" id="pipeline">
+              <li class="step" data-step="leader">
+                <span class="step-dot"><span class="material-symbols-rounded" aria-hidden="true">edit_note</span></span>
+                <div class="step-text">
+                  <p class="step-name">Leader proposal</p>
+                  <p class="step-detail">Decode execution calldata and draft verdict</p>
+                </div>
+              </li>
+              <li class="step" data-step="equivalence">
+                <span class="step-dot"><span class="material-symbols-rounded" aria-hidden="true">balance</span></span>
+                <div class="step-text">
+                  <p class="step-name">Equivalence validation</p>
+                  <p class="step-detail">Validators compare canonical output byte for byte</p>
+                </div>
+              </li>
+              <li class="step" data-step="finality">
+                <span class="step-dot"><span class="material-symbols-rounded" aria-hidden="true">lock</span></span>
+                <div class="step-text">
+                  <p class="step-name">State finality</p>
+                  <p class="step-detail">Receipt written to contract evaluation storage</p>
+                </div>
+              </li>
+            </ol>
+          </section>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="foot">
+    <p>
+      GovSentinel Intelligent Contract • Powered by GenLayer Equivalence Principle (<code>gl.eq_principle.strict_eq</code>).
+      Multi-validator AI consensus prevents Trojan horse proposals from executing on-chain.
+    </p>
+  </footer>
+
+</main>
+
+<script src="src/scenarios.js"></script>
+<script src="src/contract.js?v=3"></script>
+<script src="src/app.js?v=3"></script>
+</body>
+</html>
+
+
+
+

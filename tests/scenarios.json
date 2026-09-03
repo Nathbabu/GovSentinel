@@ -1,0 +1,209 @@
+{
+  "dao": {
+    "name": "Meridian Protocol DAO",
+    "constitution_rules": "1. Treasury payments go only to vendors approved by a prior on-chain vote.\n2. No single proposal may move more than 10000 USDC base units.\n3. Ownership, roles and proxy implementations change only through a dedicated security proposal that says so in its title.\n4. Token allowances must be bounded by the amount the proposal states.",
+    "max_single_spend": "10000",
+    "treasury_token": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "whitelisted_targets": [
+      "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "benign_developer_grant",
+      "title": "Q3 developer grant for the indexer rewrite",
+      "description": "Pay 5000 USDC to the contributor who rewrote the subgraph indexer. Scope and deliverables were approved in forum thread 214.",
+      "target_contract": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "calldata_hex": "0xa9059cbb00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c80000000000000000000000000000000000000000000000000000000000001388",
+      "claimed_recipient": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "claimed_amount": "5000",
+      "expected_method": "transfer",
+      "expected_recipient": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+      "expected_amount": "5000",
+      "auditor_verdict": {
+        "intent_match": "MATCH",
+        "risk_band": 0,
+        "findings": []
+      },
+      "expected_status": [
+        "PASSED"
+      ],
+      "expected_flags": {
+        "spending_limit_exceeded": false,
+        "unwhitelisted_target": false,
+        "privilege_escalation_detected": false
+      },
+      "notes": "Text and bytes agree, target is whitelisted, amount sits under the cap."
+    },
+    {
+      "id": "trojan_treasury_drain",
+      "title": "Fund the community moderation working group",
+      "description": "Transfer 1000 USDC to the moderation multisig to cover three months of part-time moderator stipends.",
+      "target_contract": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "calldata_hex": "0xa9059cbb00000000000000000000000090f79bf6eb2c4f870365e785982e1f101e93b906000000000000000000000000000000000000000000000000000000000007a120",
+      "claimed_recipient": "0x976EA74026E726554dB657fA54763abd0C3a0aa9",
+      "claimed_amount": "1000",
+      "expected_method": "transfer",
+      "expected_recipient": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+      "expected_amount": "500000",
+      "auditor_verdict": {
+        "intent_match": "MISMATCH",
+        "risk_band": 100,
+        "findings": [
+          "AMOUNT_MISMATCH",
+          "HIDDEN_TRANSFER",
+          "RECIPIENT_MISMATCH"
+        ]
+      },
+      "expected_status": [
+        "VETOED"
+      ],
+      "expected_flags": {
+        "spending_limit_exceeded": true,
+        "unwhitelisted_target": false,
+        "privilege_escalation_detected": false
+      },
+      "notes": "Innocuous text over calldata paying a different address 500x the stated amount."
+    },
+    {
+      "id": "stealth_ownership_hijack",
+      "title": "Adjust quorum parameter to 12 percent",
+      "description": "Routine parameter maintenance on the governor. Lowers quorum from 15 to 12 percent so smaller proposals stop stalling.",
+      "target_contract": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "calldata_hex": "0xf2fde38b0000000000000000000000003c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+      "claimed_recipient": "",
+      "claimed_amount": "0",
+      "expected_method": "transferOwnership",
+      "expected_recipient": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+      "expected_amount": "0",
+      "auditor_verdict": {
+        "intent_match": "MISMATCH",
+        "risk_band": 100,
+        "findings": [
+          "INTENT_MISMATCH",
+          "OWNERSHIP_TRANSFER"
+        ]
+      },
+      "expected_status": [
+        "VETOED"
+      ],
+      "expected_flags": {
+        "spending_limit_exceeded": false,
+        "unwhitelisted_target": false,
+        "privilege_escalation_detected": true
+      },
+      "notes": "Target is whitelisted and no value moves, so the amount and whitelist rules both stay quiet. The veto has to come from the privilege rule."
+    },
+    {
+      "id": "unapproved_target_interaction",
+      "title": "Route liquidity through the new yield adapter",
+      "description": "Move 750 USDC into the adapter contract the working group deployed last week.",
+      "target_contract": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+      "calldata_hex": "0xa9059cbb00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c800000000000000000000000000000000000000000000000000000000000002ee",
+      "claimed_recipient": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "claimed_amount": "750",
+      "expected_method": "transfer",
+      "expected_recipient": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+      "expected_amount": "750",
+      "auditor_verdict": {
+        "intent_match": "MATCH",
+        "risk_band": 20,
+        "findings": []
+      },
+      "expected_status": [
+        "FLAGGED",
+        "VETOED"
+      ],
+      "expected_flags": {
+        "spending_limit_exceeded": false,
+        "unwhitelisted_target": true,
+        "privilege_escalation_detected": false
+      },
+      "notes": "Text matches the bytes exactly and the amount is small. The only thing wrong is that nobody voted this contract onto the whitelist."
+    },
+    {
+      "id": "unlimited_treasury_approval",
+      "title": "Approve the payments relayer",
+      "description": "Grant the relayer an allowance so it can batch vendor payouts without a separate vote each time.",
+      "target_contract": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "calldata_hex": "0x095ea7b300000000000000000000000090f79bf6eb2c4f870365e785982e1f101e93b906ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "claimed_recipient": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+      "claimed_amount": "20000",
+      "expected_method": "approve",
+      "expected_recipient": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+      "expected_amount": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+      "auditor_verdict": {
+        "intent_match": "PARTIAL",
+        "risk_band": 80,
+        "findings": [
+          "CONSTITUTION_BREACH",
+          "UNLIMITED_APPROVAL"
+        ]
+      },
+      "expected_status": [
+        "VETOED"
+      ],
+      "expected_flags": {
+        "spending_limit_exceeded": true,
+        "unwhitelisted_target": false,
+        "privilege_escalation_detected": false
+      },
+      "notes": "Unbounded allowance on the treasury token, which is a drain with a delay on it."
+    },
+    {
+      "id": "opaque_selector_payload",
+      "title": "Execute the migration helper",
+      "description": "Calls the migration helper the core team prepared. Low risk.",
+      "target_contract": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "calldata_hex": "0x1cff79cd00000000000000000000000090f79bf6eb2c4f870365e785982e1f101e93b90600000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000044a9059cbb00000000000000000000000090f79bf6eb2c4f870365e785982e1f101e93b9060000000000000000000000000000000000000000000000000000000000000001",
+      "claimed_recipient": "",
+      "claimed_amount": "0",
+      "expected_method": "unknown",
+      "expected_recipient": "0x0000000000000000000000000000000000000000",
+      "expected_amount": "0",
+      "auditor_verdict": {
+        "intent_match": "MISMATCH",
+        "risk_band": 100,
+        "findings": [
+          "VAGUE_DESCRIPTION"
+        ]
+      },
+      "expected_status": [
+        "VETOED"
+      ],
+      "expected_flags": {
+        "spending_limit_exceeded": false,
+        "unwhitelisted_target": false,
+        "privilege_escalation_detected": false
+      },
+      "notes": "Selector outside the audited set. A payload no auditor can read is not one to execute."
+    },
+    {
+      "id": "disclosed_proxy_upgrade",
+      "title": "Security proposal: upgrade governor implementation to v2.1",
+      "description": "Points the governor proxy at the audited v2.1 implementation. Audit report and diff are linked in the forum thread.",
+      "target_contract": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "calldata_hex": "0x3659cfe60000000000000000000000002546bcd3c84621e976d8185a91a922ae77ecec30",
+      "claimed_recipient": "0x2546BcD3c84621e976D8185a91A922aE77ECEc30",
+      "claimed_amount": "0",
+      "expected_method": "upgradeTo",
+      "expected_recipient": "0x2546bcd3c84621e976d8185a91a922ae77ecec30",
+      "expected_amount": "0",
+      "auditor_verdict": {
+        "intent_match": "MATCH",
+        "risk_band": 40,
+        "findings": []
+      },
+      "expected_status": [
+        "FLAGGED"
+      ],
+      "expected_flags": {
+        "spending_limit_exceeded": false,
+        "unwhitelisted_target": false,
+        "privilege_escalation_detected": true
+      },
+      "notes": "The honest counterpart to stealth_ownership_hijack. Text and bytes agree so it escapes a veto, but a privileged call never returns a clean pass."
+    }
+  ]
+}

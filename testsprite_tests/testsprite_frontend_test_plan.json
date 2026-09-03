@@ -1,0 +1,291 @@
+[
+  {
+    "id": "TC001",
+    "title": "Load a benchmark preset and audit it end to end",
+    "description": "A user can select a benchmark governance scenario, review the auto-populated proposal details, run the audit, and see the final verdict and decoded calldata results.",
+    "category": "Benchmark Preset Selection",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click a benchmark preset for a benign grant scenario"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the proposal fields are populated with scenario details"
+      },
+      {
+        "type": "action",
+        "description": "Run the multi-validator consensus audit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a final audit verdict and decoded calldata results are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Submit a fully manual proposal for consensus analysis",
+    "description": "A user can enter a proposal from scratch, submit it for multi-validator analysis, and see the audit pipeline progress through to a result.",
+    "category": "Proposal Submission & Validation",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Fill in a proposal title"
+      },
+      {
+        "type": "action",
+        "description": "Fill in an intent description"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the target contract field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the recipient field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the claimed amount field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in valid hex calldata"
+      },
+      {
+        "type": "action",
+        "description": "Run the multi-validator consensus audit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the consensus pipeline progresses and a final audit result is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Manually edit a loaded proposal before auditing",
+    "description": "A user can change proposal details after loading a preset and then run the audit on the edited proposal.",
+    "category": "Proposal Submission & Validation",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click a benchmark preset for a benign grant scenario"
+      },
+      {
+        "type": "action",
+        "description": "Modify the proposal title"
+      },
+      {
+        "type": "action",
+        "description": "Modify the intent description"
+      },
+      {
+        "type": "action",
+        "description": "Modify the target contract field"
+      },
+      {
+        "type": "action",
+        "description": "Run the multi-validator consensus audit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the audit begins processing for the edited proposal"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Switch between presets without stale proposal data",
+    "description": "A user can switch from one benchmark scenario to another and see every proposal input refresh to match the newly selected preset.",
+    "category": "Benchmark Preset Selection",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click a benchmark preset for a benign grant scenario"
+      },
+      {
+        "type": "action",
+        "description": "Click a different benchmark preset for a stealth hijack scenario"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the proposal fields update to the newly selected scenario"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify stale values from the previous preset are no longer shown"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Detect a mismatch between intent and calldata",
+    "description": "A user can submit a proposal whose intent does not match the calldata and see the app flag the discrepancy with a non-passed verdict.",
+    "category": "Verdict & Consensus Output Display",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click a benchmark preset for a benign grant scenario"
+      },
+      {
+        "type": "action",
+        "description": "Modify the intent description to conflict with the loaded calldata"
+      },
+      {
+        "type": "action",
+        "description": "Run the multi-validator consensus audit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify discrepancy indicators are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the final verdict is non-passed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "See risk score and consensus stages complete in order",
+    "description": "A user can run an audit and observe the risk score reach its final value while the consensus stages complete in sequence.",
+    "category": "Verdict & Consensus Output Display",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click a benchmark preset for a stealth hijack scenario"
+      },
+      {
+        "type": "action",
+        "description": "Run the multi-validator consensus audit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the risk score gauge reaches a final value"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the consensus pipeline stages are completed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Review decoded calldata details after an audit",
+    "description": "A user can complete an audit and inspect the decoded method, recipient, amount, and whitelist status derived from the submitted calldata.",
+    "category": "Verdict & Consensus Output Display",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click a benchmark preset for an unapproved target scenario"
+      },
+      {
+        "type": "action",
+        "description": "Run the multi-validator consensus audit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify decoded calldata details are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify recipient, amount, and whitelist status information are shown"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC008",
+    "title": "Replace one benchmark scenario with another before auditing",
+    "description": "A user can rapidly choose a new preset after a previous one and confirm the console refreshes the proposal context for the latest scenario before analysis.",
+    "category": "Benchmark Preset Selection",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click a benchmark preset for a benign grant scenario"
+      },
+      {
+        "type": "action",
+        "description": "Click a benchmark preset for a trojan drain scenario"
+      },
+      {
+        "type": "action",
+        "description": "Run the multi-validator consensus audit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the audit reflects the most recently selected scenario"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC009",
+    "title": "Handle invalid proposal input with a visible non-passed outcome",
+    "description": "A user can enter malformed or conflicting proposal details and see the interface remain usable while showing a rejected or flagged audit outcome.",
+    "category": "Proposal Submission & Validation",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Fill in an invalid or malformed hex calldata value"
+      },
+      {
+        "type": "action",
+        "description": "Run the multi-validator consensus audit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a validation or rejection message is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the audit result is not passed"
+      }
+    ],
+    "priority": "Low"
+  }
+]
